@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>New Loan</title>
+    <link rel="stylesheet" href="stylesheets/style.css">
+</head>
+<nav>
+    <ul>
+        <li><a href="all_books.html">Books</a></li>
+        <li><a href="all_patrons.html">Patrons</a></li>
+        <li><a href="all_loans.html">Loans</a></li>
+    </ul>
+</nav>
+
+<body>
+    <h1>New Loan</h1>
+    <form>
+        <p> <label for="book_id">Book</label><select id="book_id"><option value="1">Harry Potter and the Philosopher's Stone</option><option value="2">Harry Potter and the Chamber of Secrets</option><option value="3">Harry Potter and the Prisoner of Azkaban</option><option value="4">Harry Potter and the Goblet of Fire</option><option value="5">Harry Potter and the Order of the Phoenix</option><option value="6">Harry Potter and the Half-Blood Prince</option><option value="7">Harry Potter and the Deathly Hallows</option><option value="8">A Brief History of Time</option><option value="9">The Universe in a Nutshell</option><option value="10">Frankenstein</option><option value="11">The Martian</option><option value="12">Ready Player One</option><option value="13">Armada</option><option value="14">Pride and Prejudice</option><option value="15">Emma</option></select></p>
+        <p>
+        <label for="patron_id">Patron</label><select id="patron_id"><option value="1">Andrew Chalkley</option><option value="2">Dave McFarland</option><option value="3">Alena Holligan</option><option value="4">Michael Poley</option></select></p>
+        <p>
+        <label for="loaned_on">Loaned on:</label><input id="loaned_on" type="text" value="Sun May 22 2016 17:00:00 GMT-0700 (PDT)"></p>
+        <p>
+        <label for="return_by">Return by:</label><input id="return_by" type="text" value="Sun May 29 2016 17:00:00 GMT-0700 (PDT)"></p>
+        <p><input type="submit" value="Create New Loan"></p>
+    </form>
+</body>
+
+</html>

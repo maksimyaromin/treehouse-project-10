@@ -1,0 +1,14 @@
+{
+  "name": "treehouse-project-10",
+  "version": "1.0.0",
+  "description": "A library on the web. App on Express with local SQLite storage",
+  "main": "src/app.js",
+  "scripts": {},
+  "author": "Max Eremin",
+  "license": "MIT",
+  "dependencies": {
+    "moment": "^2.22.0",
+    "sequelize": "^4.37.6",
+    "sqlite3": "^4.0.0"
+  }
+}
