@@ -1,0 +1,391 @@
+@import "compass/css3/box-sizing";
+@import "compass/css3/box-shadow";
+@import "compass/css3/transition";
+@import "compass/utilities/general/clearfix";
+@import "compass/css3/transform";
+
+@import "common/variables";
+@import "mixins/fonts";
+@import "mixins/media";
+
+@import "common/reset";
+@import "common/type";
+@import "common/layout";
+@import "common/footer";
+@import "common/animations";
+
+.content {
+    position: absolute;
+    width: 100%;
+    min-height: 100%;
+    background-color: $fill-background-color;
+}
+
+.content-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    padding: 30px 35px 20px;
+    align-items: center;
+    background-color: white;
+    z-index: 10000;
+    &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        border-width: 10px 100vw 0 0;
+        border-style: solid;
+        border-color: white transparent transparent;
+        left: 0; right: 0;
+        bottom: -10px;
+    }
+}
+
+.logo {
+    width: 72px;
+    height: 72px;
+
+    &.logo-out {
+        svg {
+            backface-visibility: visible;
+            animation: rotateOut 1000ms forwards;
+        }
+    }
+
+    &.logo-in {
+        svg {
+            backface-visibility: visible;
+            animation: rotateIn 1000ms forwards;
+        }
+    }
+}
+
+.menu {
+    margin: 0 45px;
+
+    &-links {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &-link {
+        @include bold(18px, 72px);
+        padding: 0 15px;
+
+        a {
+            color: $base-text-color;
+        }
+
+        &_home {
+            margin-right: 45px;
+        }
+
+        &_home a {
+            color: $accent-library-color;
+        }
+    }
+}
+
+.home-screen {
+    position: relative;
+    width: 100%;
+
+    &__welcome {
+        position: relative;
+        color: white;
+        margin: 0;
+        padding: calc((55% - 72px) / 2) 0;
+        text-align: center;
+        @include bold(72px, 1);
+    }
+}
+
+.image-overlay {
+    position: absolute;
+    width: 100%;
+    padding-top: 55%;
+    background-size: cover;
+    background-position: left center;
+    background-image: image-url("home-screen-overlay.jpg");
+    z-index: 0;
+
+    &::after {
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        top: 0; left: 0; right: 0;
+        background-color: transparentize($accent-library-color, .2);
+    }
+}
+
+.home-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.home {
+    padding: 45px 35px;
+
+    &__title {
+        @include bold(36px, 1);
+        margin-bottom: 45px;
+        text-align: center;
+        color: $base-text-color;
+    }
+}
+
+.category-list {
+    display: flex;
+    justify-content: space-around;
+
+    .category {
+        width: 300px;
+        background-color: white;
+        border-radius: 4px;
+        @include box-shadow(0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24));
+
+        &__name {
+            padding: 0 20px;
+            text-align: right;
+            color: $accent-library-color;
+            @include bold(20px, 48px);
+        }
+
+        &__menu {
+            position: relative;
+            padding: 0 20px 10px;
+
+            &-item {
+                @include light(18px, 36px);
+
+                a {
+                    color: $inaccent-text-color;
+                }
+            }
+        }
+    }
+}
+
+.content-footer {
+    position: absolute;
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    bottom: 0; left: 0; right: 0;
+    padding: 0 35px;
+
+    .footer-copyright,
+    .footer-with-lover {
+        @include regular(14px, 72px);
+        color: $inaccent-text-color;
+    }
+
+    .year {
+        padding-right: 5px;
+        font-weight: bold;
+    }
+
+    .heart {
+        padding: 0 5px;
+        color: $accent-border-color;
+    }
+}
+
+.page-screen {
+    position: relative;
+    height: 190px;
+
+    &_books {
+        background-image: $books-library-gradient;
+    }
+
+    &_patrons {
+        background-image: $patrons-library-gradient;
+    }
+
+    &_loans {
+        background-image: $loans-library-gradient;
+    }
+
+    &__welcome {
+        color: white;
+        text-align: center;
+        @include bold(48px, 190px);
+    }
+}
+
+.page {
+    padding: 45px 35px;
+
+    &-list {
+        background-color: white;
+        border-radius: 4px;
+        @include box-shadow(0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24));
+
+        .list-title {
+            height: 64px;
+            padding: 0 24px;
+            @include regular(21px, 64px);
+            color: $base-text-color;
+        }
+
+        .list {
+            width: 100%;
+
+            &-header,
+            &-cell {
+                padding: 0 56px 0 0;
+                border-bottom: 1px solid rgba(0, 0, 0, .1);
+
+                &:first-of-type {
+                    padding-left: 24px;
+                }
+
+                &:last-of-type {
+                    padding-right: 24px;
+                }
+
+                &_number {
+                    text-align: right;
+                }
+            }
+
+            &-header {
+                height: 56px;
+                overflow: hidden;
+                @include bold(13px, 1);
+                text-overflow: ellipsis;
+                color: $inaccent-text-color;
+            }
+
+            &-cell {
+                padding-top: 13px;
+                padding-bottom: 13px; 
+                @include regular(14px, 1.6);
+                color: $base-text-color;
+
+                a {
+                    color: $accent-library-color;
+                }
+            }
+
+            &-row:last-of-type {
+                .list-cell {
+                    border-bottom: none;
+                }
+            }
+        }
+
+        .list-pager-context {
+            position: relative;
+            width: 100%;
+            height: 56px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 14px 0 24px;
+            border-top: 1px solid rgba(0, 0, 0, .1);
+
+            .list-pager-total {
+                margin: 0 32px;
+                @include regular(13px, 1);
+                color: $inaccent-text-color;
+            }
+
+            .list-pager {
+                width: 72px;
+                display: flex;
+                justify-content: space-between;
+
+                .list-pager-link {
+                    position: relative;
+                    width: 24px;
+                    height: 24px;
+                    text-align: center;
+
+                    .icon {
+                        display: inline-block;
+                        width: 9px;
+                        height: 9px;
+                        border: 0 solid $inaccent-text-color;
+                        
+                    }
+
+                    &__next {
+                        .icon {
+                            border-width: 2px 2px 0 0;
+                            @include rotate(45deg);
+                        }
+                    }
+
+                    &__prev {
+                        .icon {
+                            border-width: 2px 0 0 2px;
+                            @include rotate(-45deg);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.form-context {
+    position: relative;
+    max-width: 480px;
+    margin: 45px auto 45px 35px;
+    padding: 24px;
+    background-color: white;
+    border-radius: 4px;
+    @include box-shadow(0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24));
+
+    .form {
+        position: relative;
+
+        &-group {
+            margin-bottom: 45px;
+
+            &:last-of-type {
+                margin-bottom: 0;
+            }
+        }
+
+        &-controls {
+            width: 100%;
+        }
+
+        &-input {
+            position: relative;
+            height: 50px;
+
+            &__control {
+                width: 100%;
+                height: 50px;
+                padding: 10px 24px 0;
+                color: $inaccent-text-color;
+                @include regular(18px, 50px);
+                border: 2px solid $base-border-color;
+                border-radius: 4px;
+
+                &:focus {
+                    color: $base-text-color;
+
+                    & + .form-input__placeholder {
+                        color: $accent-library-color;
+                    }
+                }
+            }
+
+            &__placeholder {
+                position: absolute;
+                display: inline-block;
+                width: auto;
+                left: 18px;
+                top: 4px;
+                color: $base-text-color;
+                @include bold(12px, 12px);
+            }
+        }
+    }
+}

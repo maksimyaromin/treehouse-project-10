@@ -1,0 +1,28 @@
+extends shared/layout.pug
+
+block styles
+    link(rel="stylesheet" href="/styles/styles.css")
+
+block body
+    div.content
+        include shared/header.pug
+        div.page-screen.page-screen_patrons
+            h1.page-screen__welcome Patrons
+        div.page
+            div#patrons.page-list
+        include shared/footer.pug
+
+block scripts
+    script(src="/scripts/scripts.js")
+    script.
+        $(document).ready(function() {
+            $("#patrons").list({
+                name: "patrons",
+                dataSource: !{patrons},
+                columns: !{columns},
+                title: "All Patrons",
+                total: !{total},
+                page: !{page},
+                paginationLink: "/patrons?page="
+            });
+        })

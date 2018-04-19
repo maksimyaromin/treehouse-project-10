@@ -1,0 +1,47 @@
+extends shared/layout.pug
+
+block styles
+    link(rel="stylesheet" href="/styles/styles.css")
+
+block body
+    div.content
+        include shared/header.pug
+        div.home-screen
+            div.image-overlay
+            h1.home-screen__welcome Awesome Library
+        div.home-wrapper
+            div.home
+                h3.home__title Welcome to Library Manager
+                ul.category-list
+                    li.category
+                        header.category__name: span Books
+                        ul.category__menu
+                            li.category__menu-item
+                                a(href="") New Book
+                            li.category__menu-item
+                                a(href="") List All
+                            li.category__menu-item
+                                a(href="") List Overdue
+                            li.category__menu-item
+                                a(href="") List Checked Out
+                    li.category
+                        header.category__name: span Patrons
+                        ul.category__menu
+                            li.category__menu-item
+                                a(href="") New Patron
+                            li.category__menu-item
+                                a(href="") List All
+                    li.category
+                        header.category__name: span Loans
+                        ul.category__menu
+                            li.category__menu-item
+                                a(href="") New Loan
+                            li.category__menu-item
+                                a(href="") List All
+                            li.category__menu-item
+                                a(href="") List Overdue
+                            li.category__menu-item
+                                a(href="") List Checked Out
+        include shared/footer.pug
+block scripts
+    script(src="./scripts/scripts.js")

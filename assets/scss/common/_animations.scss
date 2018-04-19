@@ -1,0 +1,17 @@
+@keyframes rotateOut {
+    from {
+        @include transform(perspective(400px));
+    }
+    to {
+        @include transform(perspective(400px) rotate3d(0, 1, 0, 90deg));
+    }
+}
+
+@keyframes rotateIn {
+    from {
+        @include transform(perspective(400px) rotate3d(0, 1, 0, 90deg));
+    }
+    to {
+        @include transform(perspective(400px));
+    }
+}

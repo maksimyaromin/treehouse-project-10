@@ -1,0 +1,25 @@
+extends shared/single-layout.pug
+
+block item
+    div.form-context
+        form.form
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${book.title}` name="title" id="title")
+                        span.form-input__placeholder Title
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${book.author}` name="author" id="author")
+                        span.form-input__placeholder Author
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${book.genre}` name="genre" id="genre")
+                        span.form-input__placeholder Genre
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="number" value=`${book.first_published}` name="first_published" id="first_published")
+                        span.form-input__placeholder First Published

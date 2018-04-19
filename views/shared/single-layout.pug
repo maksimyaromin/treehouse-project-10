@@ -1,0 +1,15 @@
+extends layout.pug
+
+block styles
+    link(rel="stylesheet" href="/styles/styles.css")
+
+block body
+    div.content
+        include header.pug
+        div(class=`page-screen page-screen_${page}`)
+            h1.page-screen__welcome #{title}
+        block item
+        include footer.pug
+
+block scripts
+    script(src="/scripts/scripts.js")

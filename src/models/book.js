@@ -7,8 +7,33 @@ class Book {
         this.author = author;
         this.genre = genre;
         this.first_published = first_published;
+        this.link = `/books/${this.id}`;
     }
 };
+
+const BookColumns = [
+    {
+        displayName: "Title",
+        field: "title",
+        type: "link"
+    },
+    {
+        displayName: "Author",
+        field: "author",
+        type: "string"
+    },
+    {
+        displayName: "Genre",
+        field: "genre",
+        type: "string"
+    },
+    {
+        displayName: "Year Released",
+        field: "first_published",
+        type: "number",
+        fixed: 0
+    }
+];
 
 const checkType = book => {
     if(book instanceof Book) {
@@ -39,6 +64,20 @@ const find = ({ where = null, limit = null, offset = null }) =>
     })
     .then(books => books 
         ? books.map(bookDTO => new Book(bookDTO)) : []);
+    
+const page = ({ where = null, limit = 10, offset = 0 }) =>
+        BookSchema.findAndCountAll({
+            where, limit, offset
+        })
+        .then(result => {
+            if(result.count) {
+                return {
+                    total: result.count,
+                    books: result.rows.map(bookDTO => new Book(bookDTO))
+                };
+            }
+            return { total: 0, books: [] };
+        });
 
 const remove = bookId => 
     BookSchema.destroy({
@@ -65,6 +104,8 @@ module.exports = {
         findById,
         find,
         remove,
-        update
-    }
+        update,
+        page
+    },
+    BookColumns
 };

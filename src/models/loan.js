@@ -1,10 +1,10 @@
-const { LoanSchema } = require("../database");
+const { LoanSchema, PatronSchema, BookSchema } = require("../database");
 const moment = require("moment");
 const Book = require("./book").Book;
 const Patron = require("./patron").Patron;
 
 class Loan {
-    constructor({ id, book_id, patron_id, loaned_on, return_by, returned_on }) {
+    constructor({ id, book_id, patron_id, loaned_on, return_by, returned_on, Book: book, Patron: patron }) {
         this.id = id;
         this.book_id = book_id;
         this.patron_id = patron_id;
@@ -12,14 +12,52 @@ class Loan {
         this.return_by = moment(return_by);
         this.returned_on = returned_on
             ? moment(returned_on) : null;
-    }
-    get book() {
-        return getBook(this.id);
-    }
-    get patron() {
-        return getPatron(this.id);
+        this.book = new Book(book);
+        this.book_link = this.book.link;
+        this.patron = new Patron(patron);
+        this.patron_link = this.patron.link;
     }
 };
+
+const LoanColumns = [
+    {
+        displayName: "Book",
+        field: "book",
+        template: function(book) {
+            return book.title;
+        },
+        type: "link",
+        link: "book_link"
+    },
+    {
+        displayName: "Patron",
+        field: "patron",
+        template: function(patron) {
+            return patron.full_name;
+        },
+        type: "link",
+        link: "patron_link"
+    },
+    {
+        displayName: "Loaned on",
+        field: "loaned_on",
+        type: "date"
+    },
+    {
+        displayName: "Return by",
+        field: "return_by",
+        type: "date"
+    },
+    {
+        displayName: "Returned on",
+        field: "returned_on",
+        type: "date"
+    },
+    {
+        displayName: "Action",
+        type: "action"
+    }
+];
 
 const checkType = loan => {
     if(loan instanceof Loan) {
@@ -35,10 +73,44 @@ const findById = loanId =>
 
 const find = ({ where = null, limit = null, offset = null }) => 
     LoanSchema.findAll({
-        where, limit, offset
+        where, limit, offset,
+        include: [ 
+            {
+                model: BookSchema,
+                as: "Book"
+            },
+            {
+                model: PatronSchema,
+                as: "Patron"
+            } 
+        ]
     })
     .then(loans => loans 
         ? loans.map(loanDTO => new Loan(loanDTO)) : []);
+
+const page = ({ where = null, limit = 10, offset = 0 }) =>
+    LoanSchema.findAndCountAll({
+        where, limit, offset,
+        include: [ 
+            {
+                model: BookSchema,
+                as: "Book"
+            },
+            {
+                model: PatronSchema,
+                as: "Patron"
+            } 
+        ]
+    })
+    .then(result => {
+        if(result.count) {
+            return {
+                total: result.count,
+                loans: result.rows.map(loanDTO => new Loan(loanDTO))
+            };
+        }
+        return { total: 0, loans: [] };
+    });
 
 const getBook = loanId => 
     LoanSchema.findById(loanId)
@@ -56,6 +128,8 @@ module.exports = {
         findById,
         find,
         getBook,
-        getPatron
-    }
+        getPatron,
+        page
+    },
+    LoanColumns
 };

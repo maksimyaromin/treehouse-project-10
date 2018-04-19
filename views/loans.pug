@@ -1,0 +1,28 @@
+extends shared/layout.pug
+
+block styles
+    link(rel="stylesheet" href="/styles/styles.css")
+
+block body
+    div.content
+        include shared/header.pug
+        div.page-screen.page-screen_loans
+            h1.page-screen__welcome Loans
+        div.page
+            div#loans.page-list
+        include shared/footer.pug
+
+block scripts
+    script(src="/scripts/scripts.js")
+    script.
+        $(document).ready(function() {
+            $("#loans").list({
+                name: "loans",
+                dataSource: !{loans},
+                columns: !{columns},
+                title: "All Loans",
+                total: !{total},
+                page: !{page},
+                paginationLink: "/loans?page="
+            });
+        })

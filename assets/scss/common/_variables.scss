@@ -1,0 +1,22 @@
+$compatible-fonts: Helvetica, Arial, sans-serif;
+
+$base-text-color: rgba(0, 0, 0, .87);
+$inaccent-text-color: rgba(0, 0, 0, .54);
+$accent-text-color: #0091EA;
+$fill-background-color: #f3f5f6;
+
+$base-border-color: #ccc;
+$accent-border-color: #E64A19;
+
+$accent-background-color: $accent-border-color;
+$header-background-color: rgba(21, 21, 23, .95);
+
+$screen-min-width-small: 768px;
+$screen-min-width-mid: 1000px;
+$screen-min-width-large: 1210px;
+$screen-min-width-xlarge: 1920px;
+
+$accent-library-color: #7B1FA2;
+$books-library-gradient: linear-gradient(45deg, #2E3192, #1BFFFF);
+$patrons-library-gradient: linear-gradient(45deg, #F24645, #EBC08D);
+$loans-library-gradient: linear-gradient(45deg, #009E00, #FFFF96);

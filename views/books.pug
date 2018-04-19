@@ -1,0 +1,28 @@
+extends shared/layout.pug
+
+block styles
+    link(rel="stylesheet" href="/styles/styles.css")
+
+block body
+    div.content
+        include shared/header.pug
+        div.page-screen.page-screen_books
+            h1.page-screen__welcome Books
+        div.page
+            div#books.page-list
+        include shared/footer.pug
+
+block scripts
+    script(src="/scripts/scripts.js")
+    script.
+        $(document).ready(function() {
+            $("#books").list({
+                name: "books",
+                dataSource: !{books},
+                columns: !{columns},
+                title: "All Books",
+                total: !{total},
+                page: !{page},
+                paginationLink: "/books?page="
+            });
+        })
