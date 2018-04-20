@@ -1,0 +1,31 @@
+extends shared/single-layout.pug
+
+block item
+    div.form-context
+        form#loan.form
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        select.form-input__control.form-input__control_select(name="book" id="book")
+                            each book in books
+                                option(value=`${book.id}`) #{book.name}
+                        span.form-input__placeholder Book
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        select.form-input__control.form-input__control_select(name="patron" id="patron")
+                            each patron in patrons
+                                option(value=`${patron.id}`) #{patron.name}
+                        span.form-input__placeholder Patron
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="date" name="loaned_on" id="loaned_on")
+                        span.form-input__placeholder Loaned on
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="date" name="return_by" id="return_by")
+                        span.form-input__placeholder Return by
+            div.form-actions
+                button.btn.btn-primary Create New Loan

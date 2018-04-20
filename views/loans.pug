@@ -9,6 +9,8 @@ block body
         div.page-screen.page-screen_loans
             h1.page-screen__welcome Loans
         div.page
+            div.page-actions
+                a.action.btn.btn-primary(href="/loans/new") Create New Loan
             div#loans.page-list
         include shared/footer.pug
 
@@ -16,11 +18,23 @@ block scripts
     script(src="/scripts/scripts.js")
     script.
         $(document).ready(function() {
+            var filter = "!{filter}";
             $("#loans").list({
                 name: "loans",
                 dataSource: !{loans},
                 columns: !{columns},
-                title: "All Loans",
+                title: `
+                    <a href="/loans" class="list-filter-item${filter ? "" : " list-filter-item_checked"}">
+                        All Loans
+                    </a>
+                    <span class="devider"></span>
+                    <a href="/loans/?filter=overdue" class="list-filter-item${filter === "overdue" ? " list-filter-item_checked" : ""}">
+                        Overdue Loans
+                    </a>
+                    <span class="devider"></span>
+                    <a href="/loans/?filter=checked_out" class="list-filter-item${filter === "checked_out" ? " list-filter-item_checked" : ""}">
+                        Checked Out Loans
+                    </a>`,
                 total: !{total},
                 page: !{page},
                 paginationLink: "/loans?page="

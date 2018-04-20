@@ -4,7 +4,8 @@ $.fn.list = function (options) {
         LINK: "link",
         STRING: "string",
         NUMBER: "number",
-        DATE: "date"
+        DATE: "date",
+        ACTION: "action"
     };
     const pageSize = 10;
     
@@ -12,6 +13,25 @@ $.fn.list = function (options) {
         constructor() {
             this.options = options;
             this.element = element;
+            this.init();
+        }
+        init() {
+            if(this.options.isRemote) {
+                fetch(this.options.dataSourceUrl, { credentials: "same-origin" })
+                    .then(response => response.json())
+                    .then(response => {
+                        if(response.total === 0) {
+                            return this.element.closest(".page").hide();
+                        }
+                        this.options.columns = deserialize(response.columns);
+                        this.options.dataSource = deserialize(response.items);
+                        this.options.total = response.total;
+                        this.options.page = response.page;
+                        this.options.paginationLink = "";
+                        this.render();
+                    });
+                return;
+            }
             this.render();
         }
         render() {
@@ -41,7 +61,7 @@ $.fn.list = function (options) {
             const rows = this.options.dataSource.map((item, index) => {
                 const columns = this.options.columns.map(column => {
                     let itemValue = item[column.field];
-                    if(typeof column.template === "function") {
+                    if(column.type !== TYPES.ACTION && typeof column.template === "function") {
                         itemValue = column.template(itemValue);
                     }
                     if(!itemValue) { itemValue = ""; }
@@ -68,6 +88,12 @@ $.fn.list = function (options) {
                                     ${itemValue}
                                 </span>`;
                             break;
+                        case TYPES.ACTION:
+                            if(typeof column.template !== "function") {
+                                break;
+                            }
+                            itemValue = column.template(item);
+                            break;
                         case TYPES.STRING:
                         default:
                             itemValue = `<span>${itemValue}</span>`;
@@ -82,11 +108,21 @@ $.fn.list = function (options) {
             }).join("");
             $(`<tbody>${rows}</tbody>`).appendTo(this.table);
         }
+        move(e, onNext = true) {
+            e.preventDefault();
+            this.options.page = this.options.page + (onNext ? 1 : -1);
+            fetch(this.options.dataSourceUrl + `?page=${this.options.page}`, { credentials: "same-origin" })
+                .then(response => response.json())
+                .then(response => {
+                    this.options.dataSource = deserialize(response.items);
+                    this.render();
+                });
+        };
         createPager() {
             const pagesCount = Math.ceil(this.options.total / pageSize);
             const page = this.options.page;
             if(pagesCount < 2) { return; }
-            $(`
+            const pagerContext = $(`
                 <div class="list-pager-context">
                     <div class="list-pager-total">
                         ${pageSize * (page - 1) + 1}-${pageSize * page} of ${this.options.total} 
@@ -109,6 +145,14 @@ $.fn.list = function (options) {
                     </div>
                 </div>`
             ).appendTo(this.wrapper);
+            if(this.options.isRemote) {
+                pagerContext.find(".list-pager-link__prev")
+                    .on("click", e => this.move(e, false))
+                    .find("a").removeAttr("href");
+                pagerContext.find(".list-pager-link__next")
+                    .on("click", e => this.move(e))
+                    .find("a").removeAttr("href");
+            }
         }
     }
 

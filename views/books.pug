@@ -9,6 +9,8 @@ block body
         div.page-screen.page-screen_books
             h1.page-screen__welcome Books
         div.page
+            div.page-actions
+                a.action.btn.btn-primary(href="/books/new") Create New Book
             div#books.page-list
         include shared/footer.pug
 
@@ -16,11 +18,23 @@ block scripts
     script(src="/scripts/scripts.js")
     script.
         $(document).ready(function() {
+            var filter = "!{filter}";
             $("#books").list({
                 name: "books",
                 dataSource: !{books},
                 columns: !{columns},
-                title: "All Books",
+                title: `
+                    <a href="/books" class="list-filter-item${filter ? "" : " list-filter-item_checked"}">
+                        All Books
+                    </a>
+                    <span class="devider"></span>
+                    <a href="/books/?filter=overdue" class="list-filter-item${filter === "overdue" ? " list-filter-item_checked" : ""}">
+                        Overdue Books
+                    </a>
+                    <span class="devider"></span>
+                    <a href="/books/?filter=checked_out" class="list-filter-item${filter === "checked_out" ? " list-filter-item_checked" : ""}">
+                        Checked Out Books
+                    </a>`,
                 total: !{total},
                 page: !{page},
                 paginationLink: "/books?page="

@@ -218,6 +218,11 @@
 .page {
     padding: 45px 35px;
 
+    &-actions {
+        margin-bottom: 45px;
+        margin-right: 30px;
+    }
+
     &-list {
         background-color: white;
         border-radius: 4px;
@@ -228,6 +233,32 @@
             padding: 0 24px;
             @include regular(21px, 64px);
             color: $base-text-color;
+
+            .list-filter-item {
+                vertical-align: middle;
+
+                &_checked {
+                    color: $accent-library-color;
+                }
+            }
+
+            .devider {
+                position: relative;
+                display: inline-block;
+                padding: 30px 30px 0 0;
+                vertical-align: middle;
+
+                &::after {
+                    position: absolute;
+                    content: "";
+                    width: 10px;
+                    height: 10px;
+                    background-color: $inaccent-text-color;
+                    border-radius: 50%;
+                    top: 50%; left: 50%;
+                    @include translate(-50%, -50%);
+                }
+            }
         }
 
         .list {
@@ -303,6 +334,7 @@
                     width: 24px;
                     height: 24px;
                     text-align: center;
+                    cursor: pointer;
 
                     .icon {
                         display: inline-block;
@@ -344,15 +376,25 @@
         position: relative;
 
         &-group {
-            margin-bottom: 45px;
+            position: relative;
+            margin-top: 45px;
 
-            &:last-of-type {
-                margin-bottom: 0;
+            &:first-of-type {
+                margin-top: 0;
             }
         }
 
-        &-controls {
+        &-controls, &-actions {
             width: 100%;
+        }
+
+        &-actions {
+            margin-top: 30px;
+            text-align: right;
+
+            .btn {
+                margin-left: 15px;
+            }
         }
 
         &-input {
@@ -367,6 +409,7 @@
                 @include regular(18px, 50px);
                 border: 2px solid $base-border-color;
                 border-radius: 4px;
+                @include transition(all 250ms ease-in);
 
                 &:focus {
                     color: $base-text-color;
@@ -385,7 +428,77 @@
                 top: 4px;
                 color: $base-text-color;
                 @include bold(12px, 12px);
+                @include transition(all 250ms ease-in);
+            }
+
+            &_activated {
+                .form-input__control {
+                    padding-top: 0;
+
+                    &:focus, &_full {
+                        padding-top: 10px;
+
+                        & + .form-input__placeholder {
+                            top: 4px;
+                            left: 18px;
+                            @include bold(12px, 12px);
+                        }
+                    }
+                }
+
+                .form-input__placeholder {
+                    top: auto;
+                    left: 24px;
+                    @include regular(18px, 50px);
+                }
             }
         }
+    }
+}
+
+.btn {
+    display: inline-block;
+    min-width: 64px;
+    height: 50px;
+    border: none;
+    padding: 0 30px;
+    background-color: transparent;
+    border-radius: 4px;
+    @include bold(16px, 50px);
+    text-transform: uppercase;
+    cursor: pointer;
+    @include transition(all 250ms ease-in);
+
+    &-primary {
+        background-color: $accent-library-color;
+        border-bottom: 3px solid darken($accent-library-color, 15%);
+        color: white;
+
+        &:hover {
+            @include box-shadow(0 3px 5px rgba($accent-library-color, .4));
+        }
+    }
+}
+
+.loan-details {
+    margin-bottom: 30px;
+
+    &__item {
+        padding-bottom: 15px;
+    }
+
+    &__text, &__value {
+        display: inline-block;
+    }
+
+    &__text {
+        min-width: 100px;
+        @include bold(16px, 24px);
+        color: $accent-library-color;
+    }
+
+    &__value {
+        @include regular(16px, 24px);
+        color: $base-text-color;
     }
 }

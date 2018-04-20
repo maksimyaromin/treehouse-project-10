@@ -17,31 +17,31 @@ block body
                         header.category__name: span Books
                         ul.category__menu
                             li.category__menu-item
-                                a(href="") New Book
+                                a(href="/books/new") New Book
                             li.category__menu-item
-                                a(href="") List All
+                                a(href="/books") List All
                             li.category__menu-item
-                                a(href="") List Overdue
+                                a(href="/books/?filter=overdue") List Overdue
                             li.category__menu-item
-                                a(href="") List Checked Out
+                                a(href="/books/?filter=checked_out") List Checked Out
                     li.category
                         header.category__name: span Patrons
                         ul.category__menu
                             li.category__menu-item
-                                a(href="") New Patron
+                                a(href="/patrons/new") New Patron
                             li.category__menu-item
-                                a(href="") List All
+                                a(href="/patrons") List All
                     li.category
                         header.category__name: span Loans
                         ul.category__menu
                             li.category__menu-item
-                                a(href="") New Loan
+                                a(href="/loans/new") New Loan
                             li.category__menu-item
-                                a(href="") List All
+                                a(href="/loans") List All
                             li.category__menu-item
-                                a(href="") List Overdue
+                                a(href="/loans/?filter=overdue") List Overdue
                             li.category__menu-item
-                                a(href="") List Checked Out
+                                a(href="/loans/?filter=checked_out") List Checked Out
         include shared/footer.pug
 block scripts
     script(src="./scripts/scripts.js")

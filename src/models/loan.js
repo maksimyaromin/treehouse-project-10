@@ -16,6 +16,8 @@ class Loan {
         this.book_link = this.book.link;
         this.patron = new Patron(patron);
         this.patron_link = this.patron.link;
+        this.display_loaned_on = this.loaned_on.format("YYYY-MM-DD");
+        this.display_return_by = this.return_by.format("YYYY-MM-DD");
     }
 };
 
@@ -55,7 +57,16 @@ const LoanColumns = [
     },
     {
         displayName: "Action",
-        type: "action"
+        type: "action",
+        template: function(loan) {
+            if(loan.returned_on) {
+                return "";
+            }
+            return `
+                <a class="list-action" href="/books/return/${loan.id}">
+                    Return Book
+                </a>`;
+        }
     }
 ];
 
@@ -87,6 +98,22 @@ const find = ({ where = null, limit = null, offset = null }) =>
     })
     .then(loans => loans 
         ? loans.map(loanDTO => new Loan(loanDTO)) : []);
+
+const findOne = where => 
+    LoanSchema.findOne({ 
+        where,
+        include: [ 
+            {
+                model: BookSchema,
+                as: "Book"
+            },
+            {
+                model: PatronSchema,
+                as: "Patron"
+            } 
+        ]
+        }).then(loanDTO => loanDTO 
+            ? new Loan(loanDTO) : null);
 
 const page = ({ where = null, limit = 10, offset = 0 }) =>
     LoanSchema.findAndCountAll({
@@ -129,7 +156,8 @@ module.exports = {
         find,
         getBook,
         getPatron,
-        page
+        page,
+        findOne
     },
     LoanColumns
 };

@@ -1,4 +1,4 @@
-const { BookSchema } = require("../database");
+const { BookSchema, LoanSchema } = require("../database");
 
 class Book {
     constructor({ title, author, genre, first_published = null, id = 0 }) {
@@ -65,9 +65,16 @@ const find = ({ where = null, limit = null, offset = null }) =>
     .then(books => books 
         ? books.map(bookDTO => new Book(bookDTO)) : []);
     
-const page = ({ where = null, limit = 10, offset = 0 }) =>
+const page = ({ where = null, limit = 10, offset = 0, includeWhere = null }) =>
         BookSchema.findAndCountAll({
-            where, limit, offset
+            where, limit, offset,
+            include: [
+                {
+                    model: LoanSchema,
+                    as: "Loans",
+                    where: includeWhere
+                }
+            ]
         })
         .then(result => {
             if(result.count) {

@@ -17,4 +17,8 @@
             });
     };
     setInterval(logoSpin, 10000);
+
+    const deserialize = serializedJavascript => {
+        return eval(`(${serializedJavascript})`);
+    };
 }

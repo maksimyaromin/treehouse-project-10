@@ -2,7 +2,7 @@ extends shared/single-layout.pug
 
 block item
     div.form-context
-        form.form
+        form#book.form
             div.form-group
                 div.form-controls
                     div.form-input
@@ -23,3 +23,23 @@ block item
                     div.form-input
                         input.form-input__control(type="number" value=`${book.first_published}` name="first_published" id="first_published")
                         span.form-input__placeholder First Published
+            div.form-actions
+                    if book.id
+                        button.btn.btn-primary Update
+                    else
+                        button.btn.btn-primary Create New Book
+    div.page
+        div#book-loans.page-list
+block item-scripts
+    script.
+        $(document).ready(function() {
+            $(".form-input").activePlaceholder();
+            if(!{book.id}) {
+                $("#book-loans").list({
+                    name: "book-loans",
+                    title: "Loan History",
+                    isRemote: true,
+                    dataSourceUrl: "/loans/book/" + !{book.id}
+                });
+            }
+        })

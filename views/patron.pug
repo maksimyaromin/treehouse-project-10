@@ -1,0 +1,55 @@
+extends shared/single-layout.pug
+
+block item
+    div.form-context
+        form#patron.form
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${patron.first_name}` name="first_name" id="first_name")
+                        span.form-input__placeholder First Name
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${patron.last_name}` name="last_name" id="last_name")
+                        span.form-input__placeholder Last Name
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${patron.address}` name="address" id="address")
+                        span.form-input__placeholder Address
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="email" value=`${patron.email}` name="email" id="email")
+                        span.form-input__placeholder Email
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="text" value=`${patron.library_id}` name="library_id" id="library_id")
+                        span.form-input__placeholder Library ID
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="number" value=`${patron.zip_code}` name="zip_code" id="zip_code")
+                        span.form-input__placeholder Zip Code
+            div.form-actions
+                if patron.id
+                    button.btn.btn-primary Update
+                else
+                    button.btn.btn-primary Create New Patron
+    div.page
+        div#patrons-loans.page-list
+block item-scripts
+    script.
+        $(document).ready(function() {
+            $(".form-input").activePlaceholder();
+            if(!{patron.id}) {
+                $("#patrons-loans").list({
+                    name: "patrons-loans",
+                    title: "Loan History",
+                    isRemote: true,
+                    dataSourceUrl: "/loans/patron/" + !{patron.id}
+                });
+            }
+        })

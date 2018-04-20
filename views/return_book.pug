@@ -1,0 +1,25 @@
+extends shared/single-layout.pug
+
+block item
+    div.form-context
+        form#return-book.form
+            dl.loan-details
+                div.loan-details__item
+                    dt.loan-details__text: span Book Title
+                    dd.loan-details__value: span #{loan.book.title}
+                div.loan-details__item
+                    dt.loan-details__text: span Loaned By
+                    dd.loan-details__value: span #{loan.patron.full_name}
+                div.loan-details__item
+                    dt.loan-details__text: span Loaned On
+                    dd.loan-details__value: span #{loan.display_loaned_on}
+                div.loan-details__item
+                    dt.loan-details__text: span Return By      
+                    dd.loan-details__value: span #{loan.display_return_by}
+            div.form-group
+                div.form-controls
+                    div.form-input
+                        input.form-input__control(type="date" name="returned_on" id="returned_on")
+                        span.form-input__placeholder Returned on
+            div.form-actions
+                button.btn.btn-primary Return Book

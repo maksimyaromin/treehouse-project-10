@@ -10,7 +10,7 @@ class Patron {
         this.library_id = library_id;
         this.zip_code = zip_code;
         this.link = `/patrons/${this.id}`;
-        this.full_name = `${this.first_name} ${this.last_name}`;
+        this.full_name = `${this.first_name} ${this.last_name}`; 
     }
 };
 

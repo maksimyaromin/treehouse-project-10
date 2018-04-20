@@ -4,6 +4,12 @@ const SCHEMA_TYPES = {
     LOANS: "loans"
 };
 
+const FILTERS = {
+    OVERDUE: "overdue",
+    CHECKED_OUT: "checked_out"
+};
+
 module.exports = {
-    SCHEMA_TYPES
+    SCHEMA_TYPES,
+    FILTERS
 };
