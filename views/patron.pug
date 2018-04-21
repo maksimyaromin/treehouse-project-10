@@ -3,6 +3,7 @@ extends shared/single-layout.pug
 block item
     div.form-context
         form#patron.form
+            input(type="hidden" name="id" id="id" value=`${patron.id}`)
             div.form-group
                 div.form-controls
                     div.form-input
@@ -35,9 +36,9 @@ block item
                         span.form-input__placeholder Zip Code
             div.form-actions
                 if patron.id
-                    button.btn.btn-primary Update
+                    button#update.btn.btn-primary Update
                 else
-                    button.btn.btn-primary Create New Patron
+                    button#create.btn.btn-primary Create New Patron
     div.page
         div#patrons-loans.page-list
 block item-scripts
@@ -52,4 +53,5 @@ block item-scripts
                     dataSourceUrl: "/loans/patron/" + !{patron.id}
                 });
             }
+            $("#patron").patron();
         })

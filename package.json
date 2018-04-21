@@ -17,6 +17,7 @@
     "express": "^4.16.3",
     "express-winston": "^2.5.1",
     "jquery": "^3.3.1",
+    "jquery-validation": "^1.17.0",
     "moment": "^2.22.0",
     "npm-run-all": "^4.1.2",
     "pug": "^2.0.3",
@@ -69,6 +70,7 @@
     "distJs": [
       "./node_modules/jquery/dist/jquery.min.js",
       "./node_modules/moment/moment.js",
+      "./node_modules/jquery-validation/dist/jquery.validate.js",
       "./assets/js/**/*.js"
     ],
     "distCss": [

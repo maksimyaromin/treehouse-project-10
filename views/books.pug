@@ -11,6 +11,10 @@ block body
         div.page
             div.page-actions
                 a.action.btn.btn-primary(href="/books/new") Create New Book
+                div.search-context
+                    form#search-book.search-form(action="/books" method="GET")
+                        input.search-box(type="text" id="search" name="search" placeholder="Search Books" value=`${search}`)
+                        button.search-button(type="submit") Search
             div#books.page-list
         include shared/footer.pug
 

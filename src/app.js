@@ -33,14 +33,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/", require("./routes")());
 app.use((req, res, next) => {
     res.status(404).render("error", {
-        title: "Ups! Not Found",
+        title: "Not Found",
         code: 404,
         message: "The page you requested was not found"
     });
 });  
 app.use((err, req, res, next) => {
     res.status(500).render("error", {
-        title: "Ups! Server Error",
+        title: "Server Error",
         code: res.statusCode,
         message: err.message
     });

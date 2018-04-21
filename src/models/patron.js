@@ -50,6 +50,19 @@ const checkType = patron => {
     throw new TypeError("Patron");
 };
 
+const add = patron => {
+    checkType(patron);
+    const build = PatronSchema.build({
+        first_name: patron.first_name,
+        last_name: patron.last_name,
+        address: patron.address,
+        email: patron.email,
+        library_id: patron.library_id,
+        zip_code: patron.zip_code
+    });
+    return build.save().then(patronDTO => new Patron(patronDTO));
+};
+
 const findById = patronId =>
     PatronSchema.findById(patronId)
             .then(patronDTO => patronDTO 
@@ -76,12 +89,24 @@ const page = ({ where = null, limit = 10, offset = 0 }) =>
         return { total: 0, patrons: [] };
     });
 
+const update = (patronId, patron) => {
+    checkType(patron);
+    return PatronSchema.findById(patronId)
+        .then(patronDTO => {
+            return patronDTO.update({ ...patron })
+                .then(patronDTO => new Patron(patronDTO));
+        });
+};
+    
+
 module.exports = {
     Patron,
     PatronAPI: {
+        add,
         findById,
         find,
-        page
+        page,
+        update
     },
     PatronColumns
 };

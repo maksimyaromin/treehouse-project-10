@@ -3,6 +3,7 @@ extends shared/single-layout.pug
 block item
     div.form-context
         form#return-book.form
+            input(type="hidden" name="id" id="id" value=`${loan.id}`)
             dl.loan-details
                 div.loan-details__item
                     dt.loan-details__text: span Book Title
@@ -22,4 +23,9 @@ block item
                         input.form-input__control(type="date" name="returned_on" id="returned_on")
                         span.form-input__placeholder Returned on
             div.form-actions
-                button.btn.btn-primary Return Book
+                button#return.btn.btn-primary Return Book
+block item-scripts
+    script.
+        $(document).ready(function() {
+            $("#return-book").returnBook();
+        })

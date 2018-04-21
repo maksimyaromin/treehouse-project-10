@@ -4,7 +4,7 @@ const Book = require("./book").Book;
 const Patron = require("./patron").Patron;
 
 class Loan {
-    constructor({ id, book_id, patron_id, loaned_on, return_by, returned_on, Book: book, Patron: patron }) {
+    constructor({ id, book_id, patron_id, loaned_on, return_by, returned_on, Book: book = {}, Patron: patron = {} }) {
         this.id = id;
         this.book_id = book_id;
         this.patron_id = patron_id;
@@ -75,6 +75,17 @@ const checkType = loan => {
         return;
     }
     throw new TypeError("Loan");
+};
+
+const add = loan => {
+    checkType(loan);
+    const build = LoanSchema.build({
+        book_id: loan.book_id,
+        patron_id: loan.patron_id,
+        loaned_on: loan.loaned_on,
+        return_by: loan.return_by
+    });
+    return build.save().then(loanDTO => new Loan(loanDTO));
 };
 
 const findById = loanId =>
@@ -149,15 +160,26 @@ const getPatron = loanId =>
         .then(loanDTO => loanDTO ? loanDTO.getPatron() : null)
         .then(patronDTO => patronDTO ? new Patron(patronDTO) : null);
 
+const returnBook = (loanId, loan) => {
+    checkType(loan);
+    return LoanSchema.findById(loanId)
+        .then(loanDTO => {
+            return loanDTO.update({ returned_on: loan.returned_on })
+                .then(loanDTO => new Loan(loanDTO));
+        });
+};
+
 module.exports = {
     Loan,
     LoanAPI: {
+        add,
         findById,
         find,
         getBook,
         getPatron,
         page,
-        findOne
+        findOne,
+        returnBook
     },
     LoanColumns
 };

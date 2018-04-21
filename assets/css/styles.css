@@ -246,13 +246,53 @@ body {
     font-size: 72px;
     line-height: 1; }
 
+.error-screen {
+  position: relative;
+  width: 100%; }
+  .error-screen__message {
+    position: relative;
+    color: white;
+    margin: 0;
+    padding: calc((55% - 72px) / 2) 0;
+    text-align: center; }
+    .error-screen__message .code, .error-screen__message .text {
+      display: block; }
+    .error-screen__message .code {
+      font-weight: 700;
+      font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 72px;
+      line-height: 100px; }
+    .error-screen__message .text {
+      font-weight: 700;
+      font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 48px;
+      line-height: 1; }
+
+.error-overlay {
+  position: absolute;
+  width: 100%;
+  padding-top: 55%;
+  background-size: cover;
+  background-position: left center;
+  background-image: url('../images/closed-screen-overlay.jpg?1524319964');
+  z-index: 0; }
+  .error-overlay::after {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(230, 74, 25, 0.8); }
+
 .image-overlay {
   position: absolute;
   width: 100%;
   padding-top: 55%;
   background-size: cover;
   background-position: left center;
-  background-image: url('../images/home-screen-overlay.jpg?1524206429');
+  background-image: url('../images/home-screen-overlay.jpg?1523801370');
   z-index: 0; }
   .image-overlay::after {
     position: absolute;
@@ -352,7 +392,11 @@ body {
   padding: 45px 35px; }
   .page-actions {
     margin-bottom: 45px;
-    margin-right: 30px; }
+    *zoom: 1; }
+    .page-actions:after {
+      content: "";
+      display: table;
+      clear: both; }
   .page-list {
     background-color: white;
     border-radius: 4px;
@@ -507,9 +551,13 @@ body {
         -o-transition: all 250ms ease-in;
         -webkit-transition: all 250ms ease-in;
         transition: all 250ms ease-in; }
+        .form-context .form-input__control.error {
+          border-color: #E64A19; }
+        .form-context .form-input__control_select {
+          text-indent: 19px; }
         .form-context .form-input__control:focus {
           color: rgba(0, 0, 0, 0.87); }
-          .form-context .form-input__control:focus + .form-input__placeholder {
+          .form-context .form-input__control:focus ~ .form-input__placeholder {
             color: #7B1FA2; }
       .form-context .form-input__placeholder {
         position: absolute;
@@ -530,7 +578,7 @@ body {
         padding-top: 0; }
         .form-context .form-input_activated .form-input__control:focus, .form-context .form-input_activated .form-input__control_full {
           padding-top: 10px; }
-          .form-context .form-input_activated .form-input__control:focus + .form-input__placeholder, .form-context .form-input_activated .form-input__control_full + .form-input__placeholder {
+          .form-context .form-input_activated .form-input__control:focus ~ .form-input__placeholder, .form-context .form-input_activated .form-input__control_full ~ .form-input__placeholder {
             top: 4px;
             left: 18px;
             font-weight: 700;
@@ -591,3 +639,57 @@ body {
     font-size: 16px;
     line-height: 24px;
     color: rgba(0, 0, 0, 0.87); }
+
+.search-context {
+  float: right; }
+
+.search-form {
+  position: relative;
+  width: auto;
+  height: 50px;
+  display: inline-block; }
+  .search-form .search-box {
+    width: 350px;
+    height: 50px;
+    color: rgba(0, 0, 0, 0.54);
+    padding: 0 20px 0 24px;
+    font-weight: 400;
+    font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 50px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    -moz-transition: all 250ms ease-in;
+    -o-transition: all 250ms ease-in;
+    -webkit-transition: all 250ms ease-in;
+    transition: all 250ms ease-in; }
+    .search-form .search-box:focus {
+      border-color: #7B1FA2;
+      color: rgba(0, 0, 0, 0.87); }
+  .search-form .search-button {
+    position: absolute;
+    width: 70px;
+    height: 40px;
+    right: -15px;
+    top: 5px;
+    background-color: transparent;
+    border-radius: 4px;
+    font-weight: 700;
+    font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 40px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    background-color: #7B1FA2;
+    color: white; }
+
+label.error {
+  position: absolute;
+  right: 0;
+  top: -15px;
+  font-weight: 400;
+  font-family: "Alegreya Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  color: #E64A19; }

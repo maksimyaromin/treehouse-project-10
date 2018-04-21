@@ -11,6 +11,10 @@ block body
         div.page
             div.page-actions
                 a.action.btn.btn-primary(href="/patrons/new") Create New Patron
+                div.search-context
+                    form#search-patron.search-form(action="/patrons" method="GET")
+                        input.search-box(type="text" id="search" name="search" placeholder="Search Patrons" value=`${search}`)
+                        button.search-button(type="submit") Search
             div#patrons.page-list
         include shared/footer.pug
 

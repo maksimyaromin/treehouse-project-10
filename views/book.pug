@@ -2,32 +2,33 @@ extends shared/single-layout.pug
 
 block item
     div.form-context
-        form#book.form
+        form#book.form(method="post" action="" name="book")
+            input(type="hidden" name="id" id="id" value=`${book.id}`)
             div.form-group
                 div.form-controls
                     div.form-input
                         input.form-input__control(type="text" value=`${book.title}` name="title" id="title")
-                        span.form-input__placeholder Title
+                        label.form-input__placeholder(for="title") Title
             div.form-group
                 div.form-controls
                     div.form-input
                         input.form-input__control(type="text" value=`${book.author}` name="author" id="author")
-                        span.form-input__placeholder Author
+                        label.form-input__placeholder Author
             div.form-group
                 div.form-controls
                     div.form-input
                         input.form-input__control(type="text" value=`${book.genre}` name="genre" id="genre")
-                        span.form-input__placeholder Genre
+                        label.form-input__placeholder Genre
             div.form-group
                 div.form-controls
                     div.form-input
                         input.form-input__control(type="number" value=`${book.first_published}` name="first_published" id="first_published")
-                        span.form-input__placeholder First Published
+                        label.form-input__placeholder First Published
             div.form-actions
                     if book.id
-                        button.btn.btn-primary Update
+                        button#update.btn.btn-primary Update
                     else
-                        button.btn.btn-primary Create New Book
+                        button#create.btn.btn-primary Create New Book
     div.page
         div#book-loans.page-list
 block item-scripts
@@ -42,4 +43,5 @@ block item-scripts
                     dataSourceUrl: "/loans/book/" + !{book.id}
                 });
             }
+            $("#book").book();
         })

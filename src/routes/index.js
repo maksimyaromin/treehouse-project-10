@@ -1,11 +1,12 @@
 const moment = require("moment");
 const router = require("express").Router();
 const serialize = require("serialize-javascript");
+const Sequelize = require("sequelize");
 const FILTERS = require("../constants").FILTERS;
 const {
     Book: { Book: BookModel, BookAPI, BookColumns },
     Patron: { Patron: PatronModel, PatronAPI, PatronColumns },
-    Loan: { LoanAPI, LoanColumns }
+    Loan: { Loan: LoanModel, LoanAPI, LoanColumns }
 } = require("../models");
 const Op = require("sequelize").Op;
 
@@ -19,10 +20,27 @@ module.exports = () => {
     router.get("/books", (req, res) => {
         const page = req.query.page || 1;
         const filter = req.query.filter || null;
+        const search = req.query.search || null;
+        let includeWhere = null;
         let where = null;
+        if(search) {
+            where = {
+                [Op.or]: [
+                    Sequelize.where(Sequelize.fn("lower", Sequelize.col("title")), {
+                        [Op.like]: `%${search.toLowerCase()}%`
+                    }),
+                    Sequelize.where(Sequelize.fn("lower", Sequelize.col("author")), {
+                        [Op.like]: `%${search.toLowerCase()}%`
+                    }),
+                    Sequelize.where(Sequelize.fn("lower", Sequelize.col("genre")), {
+                        [Op.like]: `%${search.toLowerCase()}%`
+                    })
+                ]
+            }
+        }
         switch(filter) {
             case FILTERS.OVERDUE:
-                where = {
+                includeWhere = {
                     returned_on: {
                         [Op.eq]: null
                     },
@@ -32,14 +50,14 @@ module.exports = () => {
                 };
                 break;
             case FILTERS.CHECKED_OUT:
-                where = {
+                includeWhere = {
                     returned_on: {
                         [Op.eq]: null
                     }
                 };
                 break;
         };
-        BookAPI.page({ includeWhere: where, offset: (page - 1) * 10 })
+        BookAPI.page({ where, includeWhere, offset: (page - 1) * 10 })
             .then(result => {
                 res.render("books", {
                     title: "Books | Library Manager",
@@ -47,8 +65,25 @@ module.exports = () => {
                     total: result.total,
                     columns: serialize(BookColumns),
                     filter,
-                    page
+                    page,
+                    search: search || ""
                 });
+            });
+    });
+
+    router.post("/book/create", (req, res) => {
+        const book = new BookModel(req.body);
+        BookAPI.add(book)
+            .then(result => {
+                res.json(result);
+            });
+    });
+
+    router.post("/book/update", (req, res) => {
+        const book = new BookModel(req.body);
+        BookAPI.update(book.id, book)
+            .then(result => {
+                res.json(result);
             });
     });
 
@@ -90,15 +125,49 @@ module.exports = () => {
 
     router.get("/patrons", (req, res) => {
         const page = req.query.page || 1;
-        PatronAPI.page({ offset: (page - 1) * 10 })
+        const search = req.query.search || null;
+        let where = null;
+        if(search) {
+            where = {
+                [Op.or]: [
+                    Sequelize.where(Sequelize.fn("lower", Sequelize.col("first_name")), {
+                        [Op.like]: `%${search.toLowerCase()}%`
+                    }),
+                    Sequelize.where(Sequelize.fn("lower", Sequelize.col("last_name")), {
+                        [Op.like]: `%${search.toLowerCase()}%`
+                    }),
+                    Sequelize.where(Sequelize.fn("lower", Sequelize.col("library_id")), {
+                        [Op.like]: `%${search.toLowerCase()}%`
+                    })
+                ]
+            }
+        }
+        PatronAPI.page({ where, offset: (page - 1) * 10 })
             .then(result => {
                 res.render("patrons", {
                     title: "Patrons | Library Manager",
                     patrons: serialize(result.patrons),
                     total: result.total,
                     columns: serialize(PatronColumns),
-                    page
+                    page,
+                    search: search || ""
                 });
+            });
+    });
+
+    router.post("/patron/create", (req, res) => {
+        const patron = new PatronModel(req.body);
+        PatronAPI.add(patron)
+            .then(result => {
+                res.json(result);
+            });
+    });
+
+    router.post("/patron/update", (req, res) => {
+        const patron = new PatronModel(req.body);
+        PatronAPI.update(patron.id, patron)
+            .then(result => {
+                res.json(result);
             });
     });
 
@@ -159,6 +228,22 @@ module.exports = () => {
                     filter,
                     page
                 });
+            });
+    });
+
+    router.post("/loan/create", (req, res) => {
+        const loan = new LoanModel(req.body);
+        LoanAPI.add(loan)
+            .then(result => {
+                res.json(result);
+            });
+    });
+
+    router.post("/loan/return", (req, res) => {
+        const loan = new LoanModel(req.body);
+        LoanAPI.returnBook(loan.id, loan)
+            .then(result => {
+                res.json(result);
             });
     });
 
