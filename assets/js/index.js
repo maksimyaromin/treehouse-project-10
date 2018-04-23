@@ -1,6 +1,7 @@
 
 {
 
+	/* Добавить новый метод к валидаторам жиквери.валидэйшн для контроля чтобы одна дата была больше другой */
 	$.validator.addMethod("greaterThan", 
 		function(value, element, params) {
 			if (!/Invalid|NaN/.test(new Date(value))) {
@@ -10,6 +11,7 @@
 		}
 	);
 
+	/* Функция для анимации логотипа библиотеки */
     const logoContext = $(".logo");
     const logoSpin = () => {
         const next = logoContext.data("view") === "m" ? "f" : "m";
@@ -32,6 +34,7 @@
         return eval(`(${serializedJavascript})`);
     };
 
+	/* Дальше идут функции, отвечающие за обратоку всех форм */
     $.fn.book = function() {
         const form = $(this);
         form.validate({
