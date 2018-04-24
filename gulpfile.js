@@ -15,7 +15,7 @@ const      gulp = require("gulp"),
          uglify = require("gulp-uglify"),
          concat = require("gulp-concat"),
            size = require("gulp-size")
-           sass = require("gulp-compass"),
+           //sass = require("gulp-compass"),
        imagemin = require("gulp-imagemin"),
            svgo = require("gulp-svgmin"),
           babel = require("gulp-babel"),
@@ -121,17 +121,17 @@ gulp.task("images", () => {
 });
 
 gulp.task("build:assets", (done) => {
-    runSequence("clean", "styles", "images", "scripts", done);
+    //runSequence("clean", "styles", "images", "scripts", done);
 });
 
 gulp.task("watch:scss", () => {
-    gulp.watch([ 
-        package.paths.src.scss + "**/*.scss"
-    ], [ "styles" ]);
+    // gulp.watch([ 
+    //     package.paths.src.scss + "**/*.scss"
+    // ], [ "styles" ]);
 });
 
 gulp.task("watch:js", () => {
-    gulp.watch([ 
-        package.paths.src.js + "**/*.js"
-    ], [ "scripts" ]);
+    // gulp.watch([ 
+    //     package.paths.src.js + "**/*.js"
+    // ], [ "scripts" ]);
 });
