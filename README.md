@@ -1,18 +1,18 @@
 # Build a Library Manager
-Приложение сожержит пример возможной реализации веб-библиотеки на Express с использованием локального SQL хранилища на SQLite.
+The application contains an example of a possible implementation of a web library on Express using a local SQL repository on SQLite.
 
-Приложение демонстрирует работу с ORM системой Sequelize. Вся логика взаимодействия с ней описана в папке *src/database*. Методы API взаимодействия для каждой схемы находятся в папке *src/models*.
+The application shows the operation with ORM Sequelize system. The logic of interaction with it is described in *src/database* folder. The interaction API methods for each schema are in *src/models* folder.
 
-Почти каждая страница сайта содержит список, который строится при помощи при помощи собственного простого jquery плагина. Для того, чтобы список строился динамически для каждой модели в модели содержится массив с описанием колонок.
+Almost every page of the site contains a list, which is built with the help of its own simple jQuery plugin. In order to build dynamical list for each model, the model contains an array with a description of the columns.
 
-Дизайн сайта был мной немного переделан, но выполнен в общем и целом по предложенным макетам. Ну, как обычно. Для сборки проекта использован gulp.
+The design of the site was slightly altered by me, but it was done in general by the proposed layouts. Well, as usually  I used gulp to build the project.
 
-Для запуска проекта необходимо выполнить команды
+To run the project the following commands might be used
 ```shell
     npm install
     npm start
 ```
-или 
+or
 ```shell
     npm install
     node src/app.js

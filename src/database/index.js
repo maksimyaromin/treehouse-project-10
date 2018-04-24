@@ -1,12 +1,12 @@
 const sequelize = require("./sequelize"),
     DataTypes = require("sequelize").DataTypes;
 
-/* Все схемы описаны в отдельной папке schemas */
+/* All schemas are described in a separate schemas folder */
 const   Book = require("./schemas/book")(sequelize, DataTypes),
       Patron = require("./schemas/patron")(sequelize, DataTypes),
         Loan = require("./schemas/loan")(sequelize, DataTypes);
 
-/* Установка ассоциаций между схемами для более гибкой работы приложения */
+/* Establishing associations between schemes for more flexible operation of the application */
 Loan.belongsTo(Book, { foreignKey: "book_id", targetKey: "id", as: "Book" });
 Loan.belongsTo(Patron, { foreignKey: "patron_id", targetKey: "id", as: "Patron" });
 Book.hasMany(Loan, { foreignKey: "book_id", sourceKey: "id", as: "Loans" });

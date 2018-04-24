@@ -1,5 +1,5 @@
-/* Вспомогательная функция для построения таблиц в данном приложении. Таблица поддерживает пагинацию и 
-    загрузку данных асинхронно */
+/* An auxiliary function for building tables in this application. The table supports pagination and
+     asynchronous data loading   */
 $.fn.list = function (options) {
     const element = $(this);
     const TYPES = {

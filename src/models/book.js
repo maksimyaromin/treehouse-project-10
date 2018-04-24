@@ -11,9 +11,9 @@ class Book {
     }
 };
 
-/* Здесь и далее каждая модель содержит массив с описание колонок таблицы, которая пользуется данной
-    моделью. Описания имеют некоторые опции, но в целом содержат отображаемое имя, поле, на которое ссылается
-    колонка и тип */
+/* Hereinafter, each model contains an array with a description of the columns of the table that uses this
+     model. Descriptions have some options but generally contain a displayed name, a field referenced by
+     column and type */
 const BookColumns = [
     {
         displayName: "Title",

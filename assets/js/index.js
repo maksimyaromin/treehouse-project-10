@@ -1,7 +1,7 @@
 
 {
 
-	/* Добавить новый метод к валидаторам жиквери.валидэйшн для контроля чтобы одна дата была больше другой */
+	/* Add a new method to jQuery validators. Validation for control so that one date is greater than the other */
 	$.validator.addMethod("greaterThan", 
 		function(value, element, params) {
 			if (!/Invalid|NaN/.test(new Date(value))) {
@@ -11,7 +11,7 @@
 		}
 	);
 
-	/* Функция для анимации логотипа библиотеки */
+	/* Function for library logo animation*/
     const logoContext = $(".logo");
     const logoSpin = () => {
         const next = logoContext.data("view") === "m" ? "f" : "m";
@@ -34,7 +34,7 @@
         return eval(`(${serializedJavascript})`);
     };
 
-	/* Дальше идут функции, отвечающие за обратоку всех форм */
+	/* Here are functions, responsible for the inverting of all forms */
     $.fn.book = function() {
         const form = $(this);
         form.validate({
